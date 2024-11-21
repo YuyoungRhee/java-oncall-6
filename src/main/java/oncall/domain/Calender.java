@@ -13,7 +13,41 @@ public class Calender {
         this.startDay = startDay;
     }
 
-   
+    public List<DateInformDto> makeDateInformDto() {
+        List<DateInformDto> dateInforms = new ArrayList<>();
+        for (int date = 1; date< month.getEndDate()+1; date++){
+            dateInforms.add(DateInformDto.of(month.getMonthNum(),
+                    date,
+                    getDayOfWeek(date),
+                    isLegalHoliday(month.getMonthNum(), date)));
+        }
+        return dateInforms;
+    }
+
+    public String getDayOfWeek(int date) {
+        if ((date + startDay.getWeekNUmber()) % 7 == 1) {
+            return "월";
+        }
+        if ((date + startDay.getWeekNUmber()) % 7 == 2) {
+            return "화";
+        }
+        if ((date + startDay.getWeekNUmber()) % 7 == 3) {
+            return "수";
+        }
+        if ((date + startDay.getWeekNUmber()) % 7 == 4) {
+            return "목";
+        }
+        if ((date + startDay.getWeekNUmber()) % 7 == 5) {
+            return "금";
+        }
+        if ((date + startDay.getWeekNUmber()) % 7 == 6) {
+            return "토";
+        }
+        if ((date + startDay.getWeekNUmber()) % 7 == 0 ) {
+            return "일";
+        }
+        throw new IllegalArgumentException("[ERROR] 오류가 발생했습니다.");
+    }
 
     public boolean isHoliday(int Month, int date) {
         return isWeekend(date) || isLegalHoliday(Month, date);
